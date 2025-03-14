@@ -27,17 +27,18 @@ public class ApiController {
     }
 
     @GetMapping("/startIndexing")
-    public ResponseEntity<String> startIndexing(){
-        return ResponseEntity.ok("start");
+    public ResponseEntity<IndexingResponse> startIndexing(){
+        return ResponseEntity.ok(indexingService.start());
     }
 
     @GetMapping("/stopIndexing")
-    public ResponseEntity<String> stopIndexing(){
-        return ResponseEntity.ok("Индексация закончена");
+    public ResponseEntity<IndexingResponse> stopIndexing()
+    {
+        return ResponseEntity.ok(indexingService.stop());
     }
 
     @PostMapping("/indexPage")
-    public ResponseEntity<String> addIndexing(String url){
-        return ResponseEntity.ok(url);
+    public ResponseEntity<IndexingResponse> addIndexing(String url){
+        return ResponseEntity.ok(indexingService.addIndexing(url));
     }
 }

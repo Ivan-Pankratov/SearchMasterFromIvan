@@ -12,4 +12,12 @@ import lombok.Setter;
 public class IndexingResponse {
     private boolean result;
     private String error;
+
+    @Override
+    public String toString() {
+        return "IndexingResponse{" +
+                "result=" + result +
+                ", error='" + error + '\'' +
+                '}';
+    }
 }

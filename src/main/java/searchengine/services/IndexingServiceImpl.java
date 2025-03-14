@@ -20,13 +20,12 @@ public class IndexingServiceImpl implements IndexingService{
 
     @Override
     public IndexingResponse start() {
-        Logger.getLogger("start","start");
         if (statusRespons){
             return new IndexingResponse(false, "Индексация уже запущена");
         }
         statusRespons = true;
         OnePageLinks links = new ForkJoinPool()
-                .invoke(new ReadOnePage("", url ));
+                .invoke(new ReadOnePage("", "https://www.larstornoe.com/" ));
         IndexingResponse response = new IndexingResponse();
         response.setResult(true);
         return response;
@@ -34,16 +33,23 @@ public class IndexingServiceImpl implements IndexingService{
 
     @Override
     public IndexingResponse stop() {
-        return null;
+        if (statusRespons){
+            statusRespons = false;
+            return new IndexingResponse(true, null);
+        }
+        return new IndexingResponse(false, "Индексация не запущена");
     }
 
     @Override
     public IndexingResponse addIndexing(String urlPage) {
-        Logger.getLogger(urlPage);
         OnePageLinks pageLinks = new ReadOnePage( "",urlPage).invoke();
-        System.out.println(pageLinks.toString());
+        System.out.println("Вот решение - " + pageLinks.toString());
         IndexingResponse response = new IndexingResponse();
         response.setResult(true);
+        if (!response.isResult()){
+            response.setError("Данная страница находится за пределами сайтов,\n" +
+                    "указанных в конфигурационном файле");
+        }
         return response;
     }
 }
