@@ -14,10 +14,11 @@ import searchengine.services.StatisticsService;
 public class ApiController {
 
     private final StatisticsService statisticsService;
-    private IndexingService indexingService;
+    private final IndexingService indexingService;
 
-    public ApiController(StatisticsService statisticsService) {
+    public ApiController(StatisticsService statisticsService, IndexingService indexingService) {
         this.statisticsService = statisticsService;
+        this.indexingService = indexingService;
     }
 
     @GetMapping("/statistics")
@@ -26,8 +27,8 @@ public class ApiController {
     }
 
     @GetMapping("/startIndexing")
-    public ResponseEntity<IndexingResponse> startIndexing(){
-        return ResponseEntity.ok(startIndexing().getBody());
+    public ResponseEntity<String> startIndexing(){
+        return ResponseEntity.ok("start");
     }
 
     @GetMapping("/stopIndexing")
@@ -35,8 +36,8 @@ public class ApiController {
         return ResponseEntity.ok("Индексация закончена");
     }
 
-    @PostMapping("/indexPage/{url}")
-    public ResponseEntity<IndexingResponse> addIndexing(@PathVariable String url){
-        return ResponseEntity.ok( indexingService.addIndexing(url));
+    @PostMapping("/indexPage")
+    public ResponseEntity<String> addIndexing(String url){
+        return ResponseEntity.ok(url);
     }
 }

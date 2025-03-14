@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "page", indexes = @Index(columnList = "firstName"))
+@Table(name = "page", indexes = @Index(columnList = "path"))
 class Page {
 
     @Id
@@ -22,8 +22,9 @@ class Page {
 
     //— адрес страницы от корня сайта
     // (должен начинаться со слэша, например: /news/372189/);
-    // изначально был тип ТЕКСТ
-    @Column(name = "path", columnDefinition = "TEXT", nullable = false)
+    // изначально был тип ТЕКСТ, но заменил на "VARCHAR(255)", т.к. выходила ошибка при запуске:
+    // "Caused by: java.sql.SQLSyntaxErrorException: BLOB/TEXT column 'path' used in key specification without a key length"
+    @Column(name = "path", columnDefinition = "VARCHAR(255)", nullable = false)
     private String path;
 
     //— код HTTP-ответа,
