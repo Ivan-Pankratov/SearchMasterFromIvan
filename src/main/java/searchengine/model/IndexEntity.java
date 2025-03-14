@@ -6,7 +6,7 @@ import lombok.Setter;
 
 // Поисковый индекс - Название класса изменено с Index на SearchIndex т.к. есть аналогичная аннотация
 @Entity
-@Table(name = "index_entity")
+@Table(name = "`index`")
 @Getter
 @Setter
 public class IndexEntity {
@@ -25,11 +25,11 @@ public class IndexEntity {
     @ManyToOne(cascade = CascadeType.MERGE,  fetch = FetchType.LAZY)
     @JoinColumn(name = "lemma_id", columnDefinition = "INT", nullable = false)
     private Lemma lemma;
-/*
+
     //— количество данной леммы для данной страницы.
-    @Column(name = "rank", columnDefinition = "FLOAT", nullable = false)
-    private Float rank;
-*/
+    @Column(name = "`rank`", columnDefinition = "FLOAT", nullable = false)
+    private Float rankPage;
+
     public IndexEntity() {
     }
 }
